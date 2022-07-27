@@ -3,7 +3,7 @@
 # Start
 start the mock server
 ```
-start run mock
+npm run mock
 ```
 start the project
 ```
