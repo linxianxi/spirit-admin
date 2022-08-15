@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useAuthMenus } from "react-router-auth-plus";
-import { useNavigate } from "react-router-dom";
+import { matchRoutes, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { MetaRouterObject } from "../../../router";
 import getMenuItems from "../utils/getMenuItems";
@@ -23,8 +23,12 @@ const SlideMenu: FC<SlideMenuProps> = ({ routers }) => {
   )?.key as string;
 
   useEffect(() => {
-    setSelectedKeys([location.pathname]);
-  }, [location.pathname]);
+    const match = matchRoutes(routers, location);
+    if (match) {
+      const keys = match.map((i) => i.pathname);
+      setSelectedKeys(keys);
+    }
+  }, [location, routers]);
 
   return (
     <Menu
