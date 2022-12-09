@@ -1,44 +1,38 @@
-import { useAuthRouters } from "react-router-auth-plus";
-import { routers } from "./router";
+import { getAuthRouters } from "react-router-auth-plus";
+import { routers } from "./routers/router";
 import NotAuth from "./pages/403";
-import { Spin } from "antd";
-import { useEffect, useLayoutEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Suspense, useMemo } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Router } from "@remix-run/router";
 import { useCurrentUserQuery } from "./hooks/query";
 
+// use router outside react component
+export let router: Router;
+
 function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const { data, isFetching } = useCurrentUserQuery();
-
-  useEffect(() => {
-    if (!localStorage.getItem("token") && location.pathname !== "/login") {
-      navigate("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useLayoutEffect(() => {
-    if (location.pathname === "/login" && data?.data.code === 0) {
-      navigate("/home");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data.code]);
-
-  return useAuthRouters({
-    auth: data?.data.data.auth || [],
-    render: (element) =>
-      isFetching ? (
-        <div className="flex justify-center items-center h-full">
-          <Spin size="large" />
-        </div>
-      ) : (
-        element
-      ),
-    noAuthElement: () => <NotAuth />,
-    routers,
+  // enabled false here, enabled in Login page or BasicLayout
+  const { data } = useCurrentUserQuery({
+    enabled: false,
   });
+  const _router = useMemo(() => {
+    const result = createBrowserRouter(
+      getAuthRouters({
+        auth: data?.data.data.auth || [],
+        noAuthElement: () => <NotAuth />,
+        routers,
+      })
+    );
+
+    router = result;
+
+    return result;
+  }, [data?.data.data.auth]);
+
+  return (
+    <Suspense>
+      <RouterProvider router={_router} />
+    </Suspense>
+  );
 }
 
 export default App;

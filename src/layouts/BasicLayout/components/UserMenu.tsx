@@ -7,6 +7,7 @@ import { Avatar, Dropdown, Menu } from "antd";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../../../hooks/query";
+import { queryClient } from "../../../main";
 
 const UserMenu: FC = () => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const UserMenu: FC = () => {
                 icon: <LogoutOutlined />,
                 onClick: () => {
                   localStorage.removeItem("token");
+                  queryClient.clear();
                   navigate("/login");
                 },
               },
@@ -48,9 +50,12 @@ const UserMenu: FC = () => {
           />
         }
       >
-        <span className="flex items-center cursor-pointer px-3 hover:bg-[#252a3d]">
-          <Avatar src="https://joeschmoe.io/api/v1/random" size="small" />
-          <span className="text-white ml-2 align-middle">{username}</span>
+        <span className="flex items-center cursor-pointer px-3 hover:bg-gray-50">
+          <Avatar
+            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            size="small"
+          />
+          <span className="ml-2 align-middle">{username}</span>
         </span>
       </Dropdown>
     </div>

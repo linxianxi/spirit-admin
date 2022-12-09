@@ -3,30 +3,33 @@ import {
   HomeOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import React from "react";
-import { AuthRouterObject } from "react-router-auth-plus";
+import React, { lazy } from "react";
+import { AuthRouteObject } from "react-router-auth-plus";
 import { Navigate } from "react-router-dom";
-import BasicLayout from "./layouts/BasicLayout";
-import Application from "./pages/application";
-import Home from "./pages/home";
-import Login from "./pages/login";
-import NotFound from "./pages/404";
-import Setting from "./pages/account/setting";
-import Center from "./pages/account/center";
 
-export interface MetaRouterObject extends AuthRouterObject {
+const BasicLayout = lazy(() => import("../layouts/BasicLayout"));
+const Application = lazy(() => import("../pages/application"));
+const Home = lazy(() => import("../pages/home"));
+const Login = lazy(() => import("../pages/login"));
+const NotFound = lazy(() => import("../pages/404"));
+const Setting = lazy(() => import("../pages/account/setting"));
+const Center = lazy(() => import("../pages/account/center"));
+
+type MetaMenu = {
   name?: string;
   icon?: React.ReactNode;
   hideInMenu?: boolean;
   hideChildrenInMenu?: boolean;
-  children?: MetaRouterObject[];
-}
+};
 
-export const routers: MetaRouterObject[] = [
+export type MetaMenuAuthRouteObject = AuthRouteObject<MetaMenu>;
+
+export const routers: MetaMenuAuthRouteObject[] = [
   { path: "/", element: <Navigate to="/home" replace /> },
   { path: "/login", element: <Login /> },
   {
     element: <BasicLayout />,
+    genAuthRoutersProp: true,
     children: [
       {
         path: "/home",

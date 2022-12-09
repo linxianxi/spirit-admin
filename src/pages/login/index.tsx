@@ -3,20 +3,22 @@ import logo from "../../assets/spirit.png";
 import { Button, Form, Input, message } from "antd";
 import { GithubOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { queryClient } from "../../main";
 import { useLoginMutation } from "../../hooks/mutation";
-import { currentUserQueryKey } from "../../hooks/query";
+import { useCurrentUserQuery } from "../../hooks/query";
 
 const Login: FC = () => {
   const navigate = useNavigate();
 
+  const { refetch, isFetching } = useCurrentUserQuery({
+    enabled: false,
+  });
   const { mutateAsync: login, isLoading } = useLoginMutation();
 
   const handleFinish = async (values: any) => {
     const { data } = await login(values);
     if (data.code === 0) {
       localStorage.setItem("token", data.token);
-      await queryClient.refetchQueries(currentUserQueryKey);
+      await refetch();
       navigate("/home");
       message.success("登录成功");
     } else {
@@ -54,7 +56,12 @@ const Login: FC = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Button loading={isLoading} type="primary" block htmlType="submit">
+            <Button
+              loading={isLoading || isFetching}
+              type="primary"
+              block
+              htmlType="submit"
+            >
               登录
             </Button>
           </Form.Item>

@@ -1,13 +1,12 @@
 import { Menu } from "antd";
 import { FC, useEffect, useState } from "react";
-import { useAuthMenus } from "react-router-auth-plus";
 import { matchRoutes, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { MetaRouterObject } from "../../../router";
+import { MetaMenuAuthRouteObject } from "../../../routers/router";
 import getMenuItems from "../utils/getMenuItems";
 
 interface SlideMenuProps {
-  routers: MetaRouterObject[];
+  routers: MetaMenuAuthRouteObject[];
 }
 
 const SlideMenu: FC<SlideMenuProps> = ({ routers }) => {
@@ -16,7 +15,7 @@ const SlideMenu: FC<SlideMenuProps> = ({ routers }) => {
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-  const menuItems = getMenuItems(useAuthMenus(routers));
+  const menuItems = getMenuItems(routers);
 
   const defaultOpenKey = menuItems.find((i) =>
     location.pathname.startsWith(i?.key as string)

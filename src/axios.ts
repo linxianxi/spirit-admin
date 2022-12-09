@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { history } from "./main";
+import { router } from "./App";
 
 axios.interceptors.response.use(
   function (response) {
@@ -8,15 +8,21 @@ axios.interceptors.response.use(
   function (error: AxiosError) {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      history.push("/login");
+      router.navigate("/login");
     }
     return Promise.reject(error);
   }
 );
 
 axios.interceptors.request.use(function (request) {
-  request.headers = {
-    authorization: localStorage.getItem("token") || "",
-  };
+  const token = localStorage.getItem("token") || "";
+  if (request.headers) {
+    request.headers.authorization = token;
+  } else {
+    request.headers = {
+      authorization: token,
+    };
+  }
+
   return request;
 });

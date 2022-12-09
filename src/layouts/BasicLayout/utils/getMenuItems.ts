@@ -1,7 +1,7 @@
 import { ItemType } from "antd/lib/menu/hooks/useItems";
-import { MetaRouterObject } from "../../../router";
+import { MetaMenuAuthRouteObject } from "../../../routers/router";
 
-const getMenuItems = (routers: MetaRouterObject[]): ItemType[] => {
+const getMenuItems = (routers: MetaMenuAuthRouteObject[]): ItemType[] => {
   const menuItems = routers.reduce((total: ItemType[], router) => {
     if (router.name && !router.hideInMenu) {
       total?.push({

@@ -1,13 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import {
+  QueryFunction,
+  QueryKey,
+  useQuery,
+  UseQueryOptions,
+} from "@tanstack/react-query";
+import axios, { AxiosResponse } from "axios";
 import { queryClient } from "../../main";
 
 export const currentUserQueryKey = ["currentUser"];
 
-export const useCurrentUserQuery = () =>
-  useQuery(currentUserQueryKey, () => axios.get("/api/me"), {
-    enabled: !!localStorage.getItem("token"),
-  });
+export const useCurrentUserQuery = (
+  options?: Omit<
+    UseQueryOptions<AxiosResponse<any, any>>,
+    "queryKey" | "queryFn"
+  >
+) => useQuery(currentUserQueryKey, () => axios.get("/api/me"), options);
 
 export const getCurrentUser = () => {
   const data: any = queryClient.getQueryData(currentUserQueryKey);

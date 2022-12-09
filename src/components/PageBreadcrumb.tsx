@@ -6,16 +6,18 @@ import {
   useLocation,
   useOutletContext,
 } from "react-router-dom";
-import { MetaRouterObject } from "../router";
+import { MetaMenuAuthRouteObject } from "../routers/router";
 
 const PageBreadcrumb: FC = () => {
   const location = useLocation();
-  const { routers } = useOutletContext<{ routers: MetaRouterObject[] }>();
+  const { routers } = useOutletContext<{
+    routers: MetaMenuAuthRouteObject[];
+  }>();
   const match = matchRoutes(routers, location);
 
   const breadcrumbs = (match || []).reduce(
-    (total: MetaRouterObject[], current) => {
-      if ((current.route as MetaRouterObject).name) {
+    (total: MetaMenuAuthRouteObject[], current) => {
+      if ((current.route as MetaMenuAuthRouteObject).name) {
         total.push(current.route);
       }
       return total;
