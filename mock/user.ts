@@ -36,7 +36,7 @@ export default [
     url: "/api/me",
     method: "get",
     rawResponse: async (req, res) => {
-      await wait(1000);
+      await wait(2000);
       const token = req.headers.authorization || "";
       if (!["admin-token", "employee-token"].includes(token)) {
         res.statusCode = 401;

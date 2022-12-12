@@ -1,24 +1,33 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import logo from "../../assets/spirit.png";
 import { Button, Form, Input, message } from "antd";
 import { GithubOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../hooks/mutation";
-import { useCurrentUserQuery } from "../../hooks/query";
+import { currentUserQueryKey, useCurrentUserQuery } from "../../hooks/query";
+import { queryClient } from "../../main";
 
 const Login: FC = () => {
   const navigate = useNavigate();
 
-  const { refetch, isFetching } = useCurrentUserQuery({
+  const { data, isFetching } = useCurrentUserQuery({
     enabled: false,
   });
+
   const { mutateAsync: login, isLoading } = useLoginMutation();
+
+  useEffect(() => {
+    if (data?.data) {
+      navigate("/home", { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFinish = async (values: any) => {
     const { data } = await login(values);
     if (data.code === 0) {
       localStorage.setItem("token", data.token);
-      await refetch();
+      await queryClient.fetchQuery(currentUserQueryKey);
       navigate("/home");
       message.success("登录成功");
     } else {

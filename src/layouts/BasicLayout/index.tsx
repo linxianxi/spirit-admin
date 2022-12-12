@@ -1,15 +1,12 @@
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, Suspense, useState } from "react";
 import { Layout } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { MetaMenuAuthRouteObject } from "../../routers/router";
 import logo from "../../assets/spirit.png";
 import UserMenu from "./components/UserMenu";
 import SlideMenu from "./components/SliderMenu";
-import { currentUserQueryKey, useCurrentUserQuery } from "../../hooks/query";
-import Loading from "../../components/Loading";
-import { queryClient } from "../../main";
 
 const Header = styled(Layout.Header)`
   height: 56px;
@@ -32,24 +29,6 @@ interface BasicLayoutProps {
 
 const BasicLayout: FC<BasicLayoutProps> = ({ authRouters = [] }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
-
-  const { isFetching } = useCurrentUserQuery({
-    enabled:
-      !queryClient.getQueryData(currentUserQueryKey) &&
-      !!localStorage.getItem("token"),
-  });
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (isFetching) {
-    return <Loading />;
-  }
 
   return (
     <Layout hasSider style={{ background: "transparent", minHeight: "100%" }}>
