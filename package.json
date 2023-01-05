@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
-    "mock": "nodemon mock/index.js"
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -38,7 +37,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "express": "^4.18.1",
     "mockjs": "^1.1.0",
-    "nodemon": "^2.0.19",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.6",
