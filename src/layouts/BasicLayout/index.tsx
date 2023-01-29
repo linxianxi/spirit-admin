@@ -11,13 +11,6 @@ import { currentUserQueryKey, useCurrentUserQuery } from "../../hooks/query";
 import Loading from "../../components/Loading";
 import { useQueryClient } from "@tanstack/react-query";
 
-const Header = styled(Layout.Header)`
-  height: 56px;
-  line-height: 56px;
-  padding: 0 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-`;
-
 const Slider = styled(Layout.Sider)`
   .ant-layout-sider-children {
     display: flex;
@@ -53,14 +46,9 @@ const BasicLayout: FC<BasicLayoutProps> = ({ authRouters = [] }) => {
   }
 
   return (
-    <Layout hasSider style={{ background: "transparent", minHeight: "100%" }}>
+    <Layout hasSider className="!bg-transparent !min-h-full">
       <Slider
-        className="left-0 top-[56px]"
-        style={{
-          position: "fixed",
-          height: "calc(100% - 56px)",
-          background: "transparent",
-        }}
+        className="left-0 top-[64px] !fixed !bg-transparent h-[calc(100%-64px)]"
         collapsed={collapsed}
         collapsedWidth={50}
         width={200}
@@ -83,11 +71,8 @@ const BasicLayout: FC<BasicLayoutProps> = ({ authRouters = [] }) => {
           )}
         </div>
       </Slider>
-      <Layout style={{ background: "transparent", minHeight: "100vh" }}>
-        <Header
-          className="fixed flex justify-between top-0 w-full z-10"
-          style={{ background: "white", right: 0 }}
-        >
+      <Layout className="!bg-transparent !min-h-[100vh]">
+        <Layout.Header className="fixed right-0 top-0 flex justify-between !bg-white w-full z-10 !px-[16px] !py-0 border-0 border-b border-b-[black]/[0.06] border-solid">
           <div className="h-full">
             <a className="h-full flex items-center">
               <div className="flex items-center justify-center bg-white w-8 h-8 rounded">
@@ -97,8 +82,8 @@ const BasicLayout: FC<BasicLayoutProps> = ({ authRouters = [] }) => {
             </a>
           </div>
           <UserMenu />
-        </Header>
-        <Layout.Content id="container" className="pt-[56px] pl-[200px] m-6">
+        </Layout.Header>
+        <Layout.Content id="container" className="pt-[64px] pl-[200px] m-6">
           <Suspense>
             <Outlet context={{ routers: authRouters }} />
           </Suspense>

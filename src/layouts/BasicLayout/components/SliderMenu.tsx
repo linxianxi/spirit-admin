@@ -31,8 +31,7 @@ const SlideMenu: FC<SlideMenuProps> = ({ routers }) => {
 
   return (
     <Menu
-      style={{ borderRightColor: "white" }}
-      className="h-full"
+      className="h-full !border-r-white"
       mode="inline"
       selectedKeys={selectedKeys}
       defaultOpenKeys={defaultOpenKey ? [defaultOpenKey] : []}
