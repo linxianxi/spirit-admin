@@ -1,11 +1,9 @@
 import {
-  QueryFunction,
-  QueryKey,
   useQuery,
+  useQueryClient,
   UseQueryOptions,
 } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { queryClient } from "../../main";
 
 export const currentUserQueryKey = ["currentUser"];
 
@@ -16,9 +14,8 @@ export const useCurrentUserQuery = (
   >
 ) => useQuery(currentUserQueryKey, () => axios.get("/api/me"), options);
 
-export const getCurrentUser = () => {
+export const useUserName = () => {
+  const queryClient = useQueryClient();
   const data: any = queryClient.getQueryData(currentUserQueryKey);
-  return {
-    username: data?.data.data.username,
-  };
+  return data?.data.data.username;
 };

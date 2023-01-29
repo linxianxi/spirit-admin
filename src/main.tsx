@@ -6,7 +6,7 @@ import "antd/dist/antd.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./axios";
 
-export const queryClient = new QueryClient({
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,

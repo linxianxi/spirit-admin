@@ -9,7 +9,7 @@ import UserMenu from "./components/UserMenu";
 import SlideMenu from "./components/SliderMenu";
 import { currentUserQueryKey, useCurrentUserQuery } from "../../hooks/query";
 import Loading from "../../components/Loading";
-import { queryClient } from "../../main";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Header = styled(Layout.Header)`
   height: 56px;
@@ -33,6 +33,7 @@ interface BasicLayoutProps {
 const BasicLayout: FC<BasicLayoutProps> = ({ authRouters = [] }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { isFetching } = useCurrentUserQuery({
     enabled:

@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Router } from "@remix-run/router";
 import { useCurrentUserQuery } from "./hooks/query";
 
-// use router outside react component
+// if you want to use router navigate outside react component
 export let router: Router;
 
 function App() {

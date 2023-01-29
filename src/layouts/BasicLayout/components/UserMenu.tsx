@@ -3,16 +3,17 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useQueryClient } from "@tanstack/react-query";
 import { Avatar, Dropdown, Menu } from "antd";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../../../hooks/query";
-import { queryClient } from "../../../main";
+import { useUserName } from "../../../hooks/query";
 
 const UserMenu: FC = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { username } = getCurrentUser();
+  const username = useUserName();
 
   return (
     <div className="flex h-full">
