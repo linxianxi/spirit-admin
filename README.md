@@ -2,8 +2,9 @@
 
 ## Start
 ```
+npm i
 npm run dev
 ```
 
 ## Preview
-<img width="1174" alt="image" src="https://user-images.githubusercontent.com/47104575/181434267-71820a98-72bb-48bb-a9df-131bd2492682.png">
+<img width="1289" alt="image" src="https://user-images.githubusercontent.com/47104575/215313916-e59e9c42-ada7-4e40-91c4-96eff295754f.png">
